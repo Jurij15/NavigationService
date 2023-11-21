@@ -5,6 +5,14 @@
     <RootNamespace>NavigationService</RootNamespace>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>NavigationService</Title>
+    <Authors>Jurij15</Authors>
+    <Company />
+    <Description>A small library to help you navigate in your WinUI3 apps</Description>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/Jurij15/NavigationService</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Jurij15/NavigationService</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
