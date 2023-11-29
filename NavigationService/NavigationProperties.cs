@@ -24,6 +24,19 @@ namespace NavigationService
             return (Type)obj.GetValue(TargetPageTypeProperty);
         }
 
+        public static readonly DependencyProperty SettingsPageTypeProperty =
+        DependencyProperty.RegisterAttached("SettingsPageType", typeof(Type), typeof(NavigationProperties), new PropertyMetadata(null));
+
+        public static void SetSettingsPageTypeProperty(DependencyObject obj, Type value)
+        {
+            obj.SetValue(SettingsPageTypeProperty, value);
+        }
+
+        public static Type GetSettingsPageTypeProperty(DependencyObject obj)
+        {
+            return (Type)obj.GetValue(SettingsPageTypeProperty);
+        }
+
         public static readonly DependencyProperty NavigateAnimationTypeProperty =
         DependencyProperty.RegisterAttached("NavigateAnimationType", typeof(NavigateAnimationType), typeof(NavigationProperties), new PropertyMetadata(null));
 

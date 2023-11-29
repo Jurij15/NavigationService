@@ -27,9 +27,9 @@ namespace NavigationService
             SlideFromRight
         }
 
-        private static NavigationView MainNavigation { get;  set; }
-        private static BreadcrumbBar MainBreadcrumb { get;  set; }
-        private static Frame MainFrame { get;  set; }
+        public static NavigationView MainNavigation { get;  set; }
+        public static BreadcrumbBar MainBreadcrumb { get;  set; }
+        public static Frame MainFrame { get;  set; }
 
 
         public static ObservableCollection<Breadcrumb> BreadCrumbs = new ObservableCollection<Breadcrumb>();
@@ -99,7 +99,18 @@ namespace NavigationService
         {
             if (_allowNavigationViewSelectionChangedNavigation)
             {
-                if (args.SelectedItem != null && args.SelectedItem.GetType() == typeof(NavigationViewItem))
+                if (args.IsSettingsSelected)
+                {
+                    Type target = NavigationProperties.GetSettingsPageTypeProperty(MainNavigation);
+
+                    if (target != null)
+                    {
+                        Navigate(target, NavigateAnimationType.Entrance);
+                    }
+
+                    return; //return when done
+                }
+                else if (args.SelectedItem != null && args.SelectedItem.GetType() == typeof(NavigationViewItem))
                 {
                     NavigationViewItem item = (NavigationViewItem)args.SelectedItem;
                     Type target = NavigationProperties.GetTargetPageTypePropertyProperty(item);
@@ -110,14 +121,7 @@ namespace NavigationService
                         Navigate(target, anim);
                     }
 
-                    /*
-                    if (AllowFocus)
-                    {
-                        MainNavigation.SelectionChanged -= NavigationView_SelectionChanged;
-                        MainNavigation.SelectedItem = MainNavigation.MenuItems.ElementAt(MainNavigation.MenuItems.IndexOf(item));
-                        MainNavigation.SelectionChanged += NavigationView_SelectionChanged;
-                    }
-                    */
+                    return; //return when done
                 }
             }
         }

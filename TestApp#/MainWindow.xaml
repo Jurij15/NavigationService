@@ -26,9 +26,10 @@
         <NavigationView
             x:Name="MainNavigation"
             Grid.Row="1"
+            navigation:NavigationProperties.SettingsPageTypeProperty="pages:SettingsPage"
             IsBackButtonVisible="Collapsed"
             IsBackEnabled="False"
-            IsSettingsVisible="False"
+            IsSettingsVisible="True"
             Loaded="MainNavigation_Loaded"
             SelectionChanged="MainNavigation_SelectionChanged">
             <NavigationView.Header>
@@ -50,6 +51,11 @@
                     navigation:NavigationProperties.NavigateAnimationTypeProperty="Entrance"
                     navigation:NavigationProperties.TargetPageTypePropertyProperty="pages:Page3"
                     Content="Page 3" />
+                <NavigationViewItem
+                    x:Name="Page5Item"
+                    navigation:NavigationProperties.NavigateAnimationTypeProperty="Entrance"
+                    navigation:NavigationProperties.TargetPageTypePropertyProperty="pages:Page5"
+                    Content="Page 5" />
             </NavigationView.MenuItems>
             <NavigationView.Content>
                 <Frame x:Name="MainFrame" />

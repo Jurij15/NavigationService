@@ -21,36 +21,16 @@ namespace TestApp_.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Page1 : Page
+    public sealed partial class Page4 : Page
     {
-        public Page1()
+        public Page4()
         {
             this.InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.NavigationService.Navigate(typeof(Page2));
-        }
-
-        private void Page2btn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.NavigationService.Navigate(typeof(Page2));
-        }
-
-        private void Page3btn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.NavigationService.Navigate(typeof(Page3));
-        }
-
-        private void Page4btn_Click(object sender, RoutedEventArgs e)
-        {
             NavigationService.NavigationService.Navigate(typeof(Page4));
-        }
-
-        private void Page5btn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.NavigationService.Navigate(typeof(Page5));
         }
     }
 }

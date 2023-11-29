@@ -14,8 +14,9 @@
     navigation:PageProperties.PageTitleProperty="Page 2"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Margin="56,44,56,0" >
         <Grid.RowDefinitions>
+            <RowDefinition Height="350" />
             <RowDefinition Height="350" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -23,6 +24,12 @@
             <ColumnDefinition Width="450" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Margin="2"
+            HorizontalAlignment="Left"
+            Text="This page has both AllowNavigationViewItemFocusWhenNavigatedTo and ClearNavigation to true and functions like a normal page" />
         <Grid
             Grid.RowSpan="2"
             Grid.Column="0"

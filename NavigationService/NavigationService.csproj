@@ -14,6 +14,7 @@
     <PackageProjectUrl>https://github.com/Jurij15/NavigationService</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Jurij15/NavigationService</RepositoryUrl>
 	<UseRidGraph>True</UseRidGraph>
+	<Version>1.1.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\NavigationBreadcrumbBar.xaml" />

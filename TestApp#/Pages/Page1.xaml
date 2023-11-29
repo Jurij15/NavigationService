@@ -14,7 +14,26 @@
     navigation:PageProperties.PageTitleProperty="Page 1"
     mc:Ignorable="d">
 
-    <Grid>
-        <Button Click="Button_Click" Content="Test" />
-    </Grid>
+    <StackPanel Margin="56,44,56,0" Spacing="2">
+        <Button
+            Click="Button_Click"
+            Content="Test"
+            Visibility="Collapsed" />
+        <Button
+            x:Name="Page2btn"
+            Click="Page2btn_Click"
+            Content="Go to Page2" />
+        <Button
+            x:Name="Page3btn"
+            Click="Page3btn_Click"
+            Content="Go to Page3" />
+        <Button
+            x:Name="Page4btn"
+            Click="Page4btn_Click"
+            Content="Go to Page4" />
+        <Button
+            x:Name="Page5btn"
+            Click="Page5btn_Click"
+            Content="Go to Page5" />
+    </StackPanel>
 </Page>

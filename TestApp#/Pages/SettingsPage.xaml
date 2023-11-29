@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="TestApp_.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:TestApp_.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:navigation="using:NavigationService"
+    navigation:PageProperties.ClearNavigationProperty="True"
+    navigation:PageProperties.IsHeaderVisibleProperty="True"
+    navigation:PageProperties.PageTitleProperty="Settings"
+    mc:Ignorable="d">
+
+    <StackPanel Margin="56,44,56,0">
+        <ComboBox
+            x:Name="NavigationViewPaneDisplayModeCombo"
+            Header="NavigationView Pane Display Mode"
+            Loaded="NavigationViewPaneDisplayModeCombo_Loaded"
+            SelectionChanged="NavigationViewPaneDisplayModeCombo_SelectionChanged" />
+    </StackPanel>
+</Page>

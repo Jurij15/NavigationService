@@ -62,7 +62,7 @@ namespace NavigationService
         }
 
         public static readonly DependencyProperty AllowNavigationViewItemFocusWhenNavigatedToProperty =
-                DependencyProperty.RegisterAttached("AllowNavigationViewItemFocusWhenToBreadcrumb", typeof(bool), typeof(PageProperties), new PropertyMetadata(null));
+                DependencyProperty.RegisterAttached("AllowNavigationViewItemFocusWhenNavigatedTo", typeof(bool), typeof(PageProperties), new PropertyMetadata(null));
 
         public static void SetAllowNavigationViewItemFocusWhenNavigatedToProperty(DependencyObject obj, bool value)
         {

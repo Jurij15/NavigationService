@@ -10,11 +10,15 @@
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <Version>1.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Pages\Page1.xaml" />
     <None Remove="Pages\Page2.xaml" />
     <None Remove="Pages\Page3.xaml" />
+    <None Remove="Pages\Page4.xaml" />
+    <None Remove="Pages\Page5.xaml" />
+    <None Remove="Pages\SettingsPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +47,21 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NavigationService\NavigationService.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Page5.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Page4.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Page3.xaml">
