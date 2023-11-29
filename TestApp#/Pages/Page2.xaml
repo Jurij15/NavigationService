@@ -7,7 +7,7 @@
     xmlns:local="using:TestApp_.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:navigation="using:NavigationService"
-    navigation:PageProperties.AllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty="True"
+    navigation:PageProperties.AllowNavigationViewItemFocusWhenNavigatedToProperty="True"
     navigation:PageProperties.ClearNavigationProperty="True"
     navigation:PageProperties.IsHeaderVisibleProperty="True"
     navigation:PageProperties.NavigationViewItemNameProperty="Page2Item"

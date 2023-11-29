@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:navigation="using:NavigationService"
-    navigation:PageProperties.AllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty="True"
+    navigation:PageProperties.AllowNavigationViewItemFocusWhenNavigatedToProperty="True"
     navigation:PageProperties.NavigationViewItemNameProperty="Page3Item"
     navigation:PageProperties.ClearNavigationProperty="True"
     navigation:PageProperties.IsHeaderVisibleProperty="True"

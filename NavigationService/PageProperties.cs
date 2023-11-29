@@ -61,17 +61,17 @@ namespace NavigationService
             return (string)obj.GetValue(NavigationViewItemNameProperty);
         }
 
-        public static readonly DependencyProperty AllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty =
-                DependencyProperty.RegisterAttached("AllowNavigationViewItemFocusWhenNavigatedInBreadcrumb", typeof(bool), typeof(PageProperties), new PropertyMetadata(null));
+        public static readonly DependencyProperty AllowNavigationViewItemFocusWhenNavigatedToProperty =
+                DependencyProperty.RegisterAttached("AllowNavigationViewItemFocusWhenToBreadcrumb", typeof(bool), typeof(PageProperties), new PropertyMetadata(null));
 
-        public static void SetAllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty(DependencyObject obj, bool value)
+        public static void SetAllowNavigationViewItemFocusWhenNavigatedToProperty(DependencyObject obj, bool value)
         {
-            obj.SetValue(AllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty, value);
+            obj.SetValue(AllowNavigationViewItemFocusWhenNavigatedToProperty, value);
         }
 
-        public static bool GetAllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty(DependencyObject obj)
+        public static bool GetAllowNavigationViewItemFocusWhenNavigatedToProperty(DependencyObject obj)
         {
-            return (bool)obj.GetValue(AllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty);
+            return (bool)obj.GetValue(AllowNavigationViewItemFocusWhenNavigatedToProperty);
         }
     }
 }

@@ -143,7 +143,7 @@ namespace NavigationService
             PageTitle = GetPageTitleProperty(obj);
             ClearNavigation = GetClearNavigationProperty(obj);
 
-            AllowNavigationViewItemFocus = GetAllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty(obj);
+            AllowNavigationViewItemFocus = GetAllowNavigationViewItemFocusWhenNavigatedToProperty(obj);
             NavigationViewItemName= GetNavigationViewItemNameProperty(obj);
 
             //prepare navigation
@@ -214,7 +214,7 @@ namespace NavigationService
             IsHeaderVisible = GetIsHeaderVisibleProperty(obj);
             ClearNavigation = GetClearNavigationProperty(obj);
 
-            AllowNavigationViewItemFocus = GetAllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty(obj);
+            AllowNavigationViewItemFocus = GetAllowNavigationViewItemFocusWhenNavigatedToProperty(obj);
             NavigationViewItemName = GetNavigationViewItemNameProperty(obj);
             //prepare navigation
 
@@ -268,7 +268,7 @@ namespace NavigationService
             IsHeaderVisible = GetIsHeaderVisibleProperty(obj);
             ClearNavigation = GetClearNavigationProperty(obj);
 
-            AllowNavigationViewItemFocus = GetAllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty(obj);
+            AllowNavigationViewItemFocus = GetAllowNavigationViewItemFocusWhenNavigatedToProperty(obj);
             NavigationViewItemName = GetNavigationViewItemNameProperty(obj);
             //prepare navigation
 
