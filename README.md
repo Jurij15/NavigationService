@@ -1,6 +1,9 @@
 # NavigationService
 A small library to help you navigate in your WinUI3 apps
 
+# Sample
+- For sample usage, refer to the [TestApp](https://github.com/Jurij15/NavigationService/tree/master/TestApp%23)
+
 # Properties
 ## Page Properties
 | Name      | Data Type | Description |
@@ -19,6 +22,3 @@ A small library to help you navigate in your WinUI3 apps
 | TargetPageType | System.Type | Page to navigate to |
 | NavigateAnimationType | NavigationService.NavigateAnimationType | Animation to use when navigating |
 | SettingsPageType | System.Type | Settings page to navigate to when IsSettingsVisible is true and is selected |
-
-# Sample
-- For sample usage, refer to the [TestApp](https://github.com/Jurij15/NavigationService/tree/master/TestApp%23)
