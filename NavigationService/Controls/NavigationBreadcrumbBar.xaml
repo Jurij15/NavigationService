@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="NavigationService.Controls.NavigationBreadcrumbBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:NavigationService.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <BreadcrumbBar x:Name="_rootBreadcrumb">
+        <BreadcrumbBar.Resources>
+            <Style x:Key="BreadcrumbBarItemStyle" TargetType="BreadcrumbBarItem">
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
+            </Style>
+            <StaticResource x:Key="BreadcrumbBarNormalForegroundBrush" ResourceKey="TextFillColorSecondaryBrush" />
+            <StaticResource x:Key="BreadcrumbBarHoverForegroundBrush" ResourceKey="TextFillColorPrimaryBrush" />
+            <StaticResource x:Key="BreadcrumbBarPressedForegroundBrush" ResourceKey="TextFillColorTertiaryBrush" />
+        </BreadcrumbBar.Resources>
+        <BreadcrumbBar.ItemTemplate>
+            <DataTemplate x:Name="BreadcrumbBarItemTemplate" x:DataType="BreadcrumbBarItem">
+                <BreadcrumbBarItem Content="{Binding Content}" Style="{StaticResource BreadcrumbBarItemStyle}" />
+            </DataTemplate>
+        </BreadcrumbBar.ItemTemplate>
+    </BreadcrumbBar>
+</UserControl>

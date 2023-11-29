@@ -1,18 +1,23 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using NavigationService.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static NavigationService.NavigationProperties;
+using Windows.Graphics.Printing.OptionDetails;
+using static NavigationService.PageProperties;
 
 namespace NavigationService
 {
     public class NavigationService
     {
+        public static bool _allowNavigationViewSelectionChangedNavigation;
+        public static bool _allowBreadcrumbBarItemClickedRedirection;
+        public static bool _allowFrameNavigatedRedirection;
         public enum NavigateAnimationType
         {
             NoAnimation,
@@ -31,25 +36,105 @@ namespace NavigationService
 
         public static ObservableCollection<ObservableCollection<Breadcrumb>> NavigationHistory = new ObservableCollection<ObservableCollection<Breadcrumb>>();
 
-        public static void Initialize(NavigationView navigationView, BreadcrumbBar breadcrumbBar, Frame frame, bool EnableHistory = false)
+        public static void Initialize(NavigationView navigationView, BreadcrumbBar breadcrumbBar, Frame frame, bool AllowNavigationViewSelectionChangedNavigation = true, bool AllowBreadcrumbBarItemClickedRedirection = true, bool AllowFrameNavigatedRedirection = true)
         {
             MainNavigation = navigationView;
             MainBreadcrumb = breadcrumbBar;
             MainFrame = frame;
 
             BreadCrumbs = new ObservableCollection<Breadcrumb>();
+            _allowNavigationViewSelectionChangedNavigation = AllowNavigationViewSelectionChangedNavigation;
+            _allowBreadcrumbBarItemClickedRedirection = AllowBreadcrumbBarItemClickedRedirection;
+            _allowFrameNavigatedRedirection = AllowFrameNavigatedRedirection;
+
+            if (_allowNavigationViewSelectionChangedNavigation)
+            {
+                navigationView.SelectionChanged += NavigationView_SelectionChanged;
+            }
+            if (_allowBreadcrumbBarItemClickedRedirection)
+            {
+                breadcrumbBar.ItemClicked += BreadcrumbBar_ItemClicked;
+            }
+            if (_allowFrameNavigatedRedirection)
+            {
+                frame.Navigated += Frame_Navigated;
+            }
+        }
+
+        public static void Initialize(NavigationView navigationView, NavigationBreadcrumbBar breadcrumbBar, Frame frame, bool AllowNavigationViewSelectedItemRedirection = true, bool AllowBreadcrumbBarItemClickedRedirection = true, bool AllowFrameNavigatedRedirection = true)
+        {
+            MainNavigation = navigationView;
+            MainBreadcrumb = breadcrumbBar.RootBreadcrumbBar;
+            MainFrame = frame;
+
+            BreadCrumbs = new ObservableCollection<Breadcrumb>();
+            _allowNavigationViewSelectionChangedNavigation = AllowNavigationViewSelectedItemRedirection;
+            _allowBreadcrumbBarItemClickedRedirection = AllowBreadcrumbBarItemClickedRedirection;
+            _allowFrameNavigatedRedirection = AllowFrameNavigatedRedirection;
+
+            if (_allowNavigationViewSelectionChangedNavigation)
+            {
+                navigationView.SelectionChanged += NavigationView_SelectionChanged;
+            }
+            if (_allowBreadcrumbBarItemClickedRedirection)
+            {
+                breadcrumbBar.RootBreadcrumbBar.ItemClicked += BreadcrumbBar_ItemClicked;
+            }
+            if (_allowFrameNavigatedRedirection)
+            {
+                frame.Navigated += Frame_Navigated;
+            }
+        }
+
+        private static void Frame_Navigated(object sender, Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+        }
+
+        private static void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
+        {
+            NavigateFromBreadcrumb(args);
+        }
+
+        private static void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (_allowNavigationViewSelectionChangedNavigation)
+            {
+                if (args.SelectedItem != null && args.SelectedItem.GetType() == typeof(NavigationViewItem))
+                {
+                    NavigationViewItem item = (NavigationViewItem)args.SelectedItem;
+                    Type target = NavigationProperties.GetTargetPageTypePropertyProperty(item);
+                    NavigateAnimationType anim = NavigationProperties.GetNavigateAnimationTypeProperty(item);
+
+                    if (target != null && anim != null)
+                    {
+                        Navigate(target, anim);
+                    }
+
+                    /*
+                    if (AllowFocus)
+                    {
+                        MainNavigation.SelectionChanged -= NavigationView_SelectionChanged;
+                        MainNavigation.SelectedItem = MainNavigation.MenuItems.ElementAt(MainNavigation.MenuItems.IndexOf(item));
+                        MainNavigation.SelectionChanged += NavigationView_SelectionChanged;
+                    }
+                    */
+                }
+            }
         }
 
         private static void UpdateBreadcrumb()
         {
             MainBreadcrumb.ItemsSource = BreadCrumbs;
         }
-        public static void Navigate(Type TargetPageType, NavigateAnimationType AnimType, object parameter = null, bool NavigatingBackwardsFromBreadcrumb = false)
+        public static void Navigate(Type TargetPageType, NavigateAnimationType AnimType = NavigateAnimationType.Entrance, object parameter = null)
         {
             //prepare all variables
             bool ClearNavigation = true;
             string PageTitle = "";
             bool IsHeaderVisible = true;
+
+            bool AllowNavigationViewItemFocus = false;
+            string NavigationViewItemName = null;
 
             DependencyObject obj = Activator.CreateInstance(TargetPageType) as DependencyObject;
 
@@ -57,6 +142,9 @@ namespace NavigationService
             IsHeaderVisible = GetIsHeaderVisibleProperty(obj);
             PageTitle = GetPageTitleProperty(obj);
             ClearNavigation = GetClearNavigationProperty(obj);
+
+            AllowNavigationViewItemFocus = GetAllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty(obj);
+            NavigationViewItemName= GetNavigationViewItemNameProperty(obj);
 
             //prepare navigation
 
@@ -71,7 +159,7 @@ namespace NavigationService
 
             //prepare transtions
             NavigationTransitionInfo info;
-            if (!NavigatingBackwardsFromBreadcrumb)
+            if (ClearNavigation)
             {
                 switch (AnimType)
                 {
@@ -97,13 +185,18 @@ namespace NavigationService
             }
             else
             {
-                info = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft };
+                info = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight };
             }
 
             MainNavigation.AlwaysShowHeader = IsHeaderVisible;
             ChangeBreadcrumbVisibility(IsHeaderVisible);
 
             MainFrame.Navigate(TargetPageType, parameter, info);
+
+            if (AllowNavigationViewItemFocus)
+            {
+                SelectNavigationViewItem(NavigationViewItemName);
+            }
         }
 
         public static void NavigateFromBreadcrumb(Type TargetPageType, int BreadcrumbBarIndex, bool NavigatingBackwardsFromBreadcrumb = true)
@@ -112,12 +205,17 @@ namespace NavigationService
             bool ClearNavigation = true;
             bool IsHeaderVisible = true;
 
+            bool AllowNavigationViewItemFocus = false;
+            string NavigationViewItemName = null;
+
             DependencyObject obj = Activator.CreateInstance(TargetPageType) as DependencyObject;
 
             //get all variables
             IsHeaderVisible = GetIsHeaderVisibleProperty(obj);
             ClearNavigation = GetClearNavigationProperty(obj);
 
+            AllowNavigationViewItemFocus = GetAllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty(obj);
+            NavigationViewItemName = GetNavigationViewItemNameProperty(obj);
             //prepare navigation
 
             //prepare transtions
@@ -140,17 +238,29 @@ namespace NavigationService
                     BreadCrumbs.RemoveAt(indexToRemoveAfter + 1);
                 }
             }
+
+            if (AllowNavigationViewItemFocus)
+            {
+                SelectNavigationViewItem(NavigationViewItemName);
+            }
         }
 
         public static void NavigateFromBreadcrumb(BreadcrumbBarItemClickedEventArgs args)
         {
-            if (args == null || args.Index < NavigationService.BreadCrumbs.Count - 1)
+            if (args == null)
             {
                 throw new ArgumentNullException("args was null");
+            }
+            if (args.Index < NavigationService.BreadCrumbs.Count)
+            {
+                //throw new Exception(args.Index + "idk"+ NavigationService.BreadCrumbs.Count.ToString());
             }
             //prepare all variables
             bool ClearNavigation = true;
             bool IsHeaderVisible = true;
+
+            bool AllowNavigationViewItemFocus = false;
+            string NavigationViewItemName = null;
 
             DependencyObject obj = Activator.CreateInstance((args.Item as Breadcrumb).Page) as DependencyObject;
 
@@ -158,6 +268,8 @@ namespace NavigationService
             IsHeaderVisible = GetIsHeaderVisibleProperty(obj);
             ClearNavigation = GetClearNavigationProperty(obj);
 
+            AllowNavigationViewItemFocus = GetAllowNavigationViewItemFocusWhenNavigatedInBreadcrumbProperty(obj);
+            NavigationViewItemName = GetNavigationViewItemNameProperty(obj);
             //prepare navigation
 
             //prepare transtions
@@ -180,6 +292,32 @@ namespace NavigationService
                     BreadCrumbs.RemoveAt(indexToRemoveAfter + 1);
                 }
             }
+
+            if (AllowNavigationViewItemFocus)
+            {
+                SelectNavigationViewItem(NavigationViewItemName);
+            }
+        }
+
+        private static void SelectNavigationViewItem(string Name)
+        {
+            MainNavigation.SelectionChanged -= NavigationView_SelectionChanged;
+
+            //find the item index
+            foreach (var item in MainNavigation.MenuItems)
+            {
+                if (item.GetType() == typeof(NavigationViewItem))
+                {
+                    NavigationViewItem requireditem = item as NavigationViewItem;
+
+                    if (requireditem.Name == Name)
+                    {
+                        MainNavigation.SelectedItem = MainNavigation.MenuItems.ElementAt(MainNavigation.MenuItems.IndexOf(requireditem));
+                    }
+                }
+            }
+
+            MainNavigation.SelectionChanged += NavigationView_SelectionChanged;
         }
 
         public static void ChangeBreadcrumbVisibility(bool IsBreadcrumbVisible)

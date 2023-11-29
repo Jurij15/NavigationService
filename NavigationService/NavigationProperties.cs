@@ -1,51 +1,40 @@
 ﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static NavigationService.NavigationService;
 
 namespace NavigationService
 {
     public class NavigationProperties
     {
-        public static readonly DependencyProperty IsHeaderVisibleProperty =
-            DependencyProperty.RegisterAttached("IsHeaderVisible", typeof(bool), typeof(NavigationProperties), new PropertyMetadata(null));
+        public static readonly DependencyProperty TargetPageTypeProperty =
+                DependencyProperty.RegisterAttached("TargetPageType", typeof(Type), typeof(NavigationProperties), new PropertyMetadata(null));
 
-        public static void SetIsHeaderVisibleProperty(DependencyObject obj, bool value)
+        public static void SetTargetPageTypePropertyProperty(DependencyObject obj, Type value)
         {
-            obj.SetValue(IsHeaderVisibleProperty, value);
+            obj.SetValue(TargetPageTypeProperty, value);
         }
 
-        public static bool GetIsHeaderVisibleProperty(DependencyObject obj)
+        public static Type GetTargetPageTypePropertyProperty(DependencyObject obj)
         {
-            return (bool)obj.GetValue(IsHeaderVisibleProperty);
+            return (Type)obj.GetValue(TargetPageTypeProperty);
         }
 
-        public static readonly DependencyProperty ClearNavigationProperty =
-            DependencyProperty.RegisterAttached("ClearNavigation", typeof(bool), typeof(NavigationProperties), new PropertyMetadata(null));
+        public static readonly DependencyProperty NavigateAnimationTypeProperty =
+        DependencyProperty.RegisterAttached("NavigateAnimationType", typeof(NavigateAnimationType), typeof(NavigationProperties), new PropertyMetadata(null));
 
-        public static void SetClearNavigationProperty(DependencyObject obj, bool value)
+        public static void SetNavigateAnimationTypeProperty(DependencyObject obj, NavigateAnimationType value)
         {
-            obj.SetValue(ClearNavigationProperty, value);
+            obj.SetValue(NavigateAnimationTypeProperty, value);
         }
 
-        public static bool GetClearNavigationProperty(DependencyObject obj)
+        public static NavigateAnimationType GetNavigateAnimationTypeProperty(DependencyObject obj)
         {
-            return (bool)obj.GetValue(ClearNavigationProperty);
-        }
-
-        public static readonly DependencyProperty PageTitleProperty =
-            DependencyProperty.RegisterAttached("PageTitle", typeof(string), typeof(NavigationProperties), new PropertyMetadata(null));
-
-        public static void SetPageTitleProperty(DependencyObject obj, string value)
-        {
-            obj.SetValue(PageTitleProperty, value);
-        }
-
-        public static string GetPageTitleProperty(DependencyObject obj)
-        {
-            return (string)obj.GetValue(PageTitleProperty);
+            return (NavigateAnimationType)obj.GetValue(NavigateAnimationTypeProperty);
         }
     }
 }
